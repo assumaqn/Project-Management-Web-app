@@ -9,9 +9,6 @@ function App() {
     projects: [],
   });
 
-  // function handleClick() {
-  //   setIsClicked((pre) => !pre);
-  // }
   function handleClick() {
     setProjectState((pre) => {
       return {
@@ -20,12 +17,25 @@ function App() {
       };
     });
   }
+  function handleAddProject(newProject) {
+    const project = {
+      ...newProject,
+      id: Math.random(),
+    };
+    setProjectState((pre) => {
+      return {
+        ...pre,
+        projects: [...pre.projects, project],
+      };
+    });
+  }
+  console.log(projectsState);
   let content;
   if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onClick={handleClick} />;
   }
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject />;
+    content = <NewProject onAdd={handleAddProject} />;
   }
   return (
     <main className="h-screen my-8 flex gap-8">
